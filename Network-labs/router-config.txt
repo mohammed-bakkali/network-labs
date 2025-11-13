@@ -1,0 +1,88 @@
+Steps to Basic Configure router:
+
+changer name Router: 
+
+Router> enable
+Router# configure terminal
+Router(config)# hostname MyRouter
+
+MyRouter(config)#
+
+
+Save name After restarting: 
+
+MyRouter# copy running-config startup-config
+Destination filename [startup-config]? Press Enter only
+Building configuration...
+[OK]
+
+
+
+MyRouter# show clock
+*2:38:34.370 UTC Tue Mar 2 1993
+
+problem mode: 
+ ex:    MyRouter(config)# do show clock
+ rustle: *2:42:10.752 UTC Tue Mar 2 1993 
+
+Time and Clock Control:
+
+MyRouter# clock set 12:30:00 Nov 12 2025
+
+setting port concted Lan:
+
+MyRouter# configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+MyRouter(config)#
+
+Enter to interface
+MyRouter(config)# interface GigabitEthernet0/0/1
+
+ Set the IP address of the port:
+MyRouter(config-if)#ip address 192.168.1.1 255.255.255.0
+MyRouter(config-if)# no shutdown
+
+MyRouter(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+
+MyRouter(config-if)#
+MyRouter# show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0/0   192.168.1.1     YES manual up                    up 
+GigabitEthernet0/0/1   unassigned      YES unset  administratively down down 
+GigabitEthernet0/0/2   unassigned      YES unset  administratively down down 
+Vlan1                  unassigned      YES unset  administratively down down
+MyRouter#
+
+
+By default, the router ports are administratively down. 
+No shutdown you say to the router:
+
+Note:
+-The IP you gave to the port (192.168.1.1) will be the default gateway for devices in the LAN.
+
+
+
+
+MyRouter>show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.1.0/24 is directly connected, GigabitEthernet0/0/0
+L       192.168.1.1/32 is directly connected, GigabitEthernet0/0/0
+     192.168.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.2.0/24 is directly connected, GigabitEthernet0/0/1
+L       192.168.2.1/32 is directly connected, GigabitEthernet0/0/1
+
+MyRouter>
+
