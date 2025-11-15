@@ -66,6 +66,7 @@ Note:
 
 
 
+- Show Configuration is coricte
 MyRouter>show ip route
 Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
        D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
@@ -85,4 +86,24 @@ C       192.168.2.0/24 is directly connected, GigabitEthernet0/0/1
 L       192.168.2.1/32 is directly connected, GigabitEthernet0/0/1
 
 MyRouter>
+
+
+Cisco DHCP Pool Creation Command:
+
+MyRouter> enable
+MyRouter# configure terminal
+
+Router(config)# ip dhcp pool POOL_1
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8
+
+MyRouter(dhcp-config)# exit
+MyRouter(config)#
+
+MyRouter(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.49
+
+
+MyRouter(config)# do copy running-config startup-config
+
 
